@@ -13,6 +13,9 @@ import "../styles/index.scss";
 import store from "@/redux/store";
 import { Provider } from "react-redux";
 
+// 5. 淘宝适配  (分成100份，取其中十分之一为1rem)
+import 'lib-flexible'
+
 export default function Layout() {
   return (
     <div className={styles.all}>

@@ -1,0 +1,314 @@
+$yh: "Microsoft yahei";
+$base_bg: #fff;
+$base_color: #ff5f16; // 主题色
+
+// 变量  $yh  $base_color
+// 嵌套
+// 函数
+
+@import "animate.css";
+@import "common.scss";
+@import "mobile.scss";
+@import "fonts/iconfont.css";
+@import "swiper.min.css"; // 全局的swiper 样式
+@import "login.scss";
+
+.van-icon {
+  font-size: 16px;
+}
+
+.root,
+.mbox,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.bounce {
+  animation: bounce 0.9s;
+  -webkit-animation: bounce 0.9s;
+}
+.rgbox {
+  padding: 15px;
+  .lastitem {
+    display: flex;
+    justify-content: space-between;
+    .color1 {
+      color: #f50;
+    }
+    .color2 {
+      color: darkorchid;
+    }
+  }
+}
+
+.tada1 {
+  animation: tada 1.2s both infinite;
+  -webkit-animation: tada 1.2s both infinite;
+}
+.tada {
+  animation: tada 1.2s;
+  -webkit-animation: tada 1.2s;
+}
+.min-enter-active {
+  animation: zoomInDown 1s;
+  -webkit-animation: zoomInDown 1s;
+}
+.min-leave-active {
+  animation: zoomOutDown 1s;
+}
+
+.van-sticky--fixed {
+  z-index: 9999 !important;
+}
+.links {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .color1 {
+    color: #f50;
+  }
+  .color2 {
+    color: #123456;
+  }
+  .left a {
+    color: #f50;
+  }
+  .right a {
+    color: #123456;
+  }
+}
+.hicon {
+  font-size: 20px !important;
+  color: #ff5f16 !important;
+}
+.mpage {
+  padding-top: 46px;
+  padding-bottom: 45px;
+}
+// 二级页面都要加 subpage
+.subpage {
+  padding-top: 46px;
+}
+
+html,
+body,
+#app,
+.box {
+  width: 100%;
+  height: 100%;
+}
+.box {
+  padding: 0 0 0 0;
+}
+.spage {
+  padding: 46px 0 0 0;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+}
+.main-box {
+  width: 100%;
+  height: 100%;
+  padding: 46px 0 45px 0;
+}
+
+@keyframes moveIn {
+  from {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes moveOut {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+}
+.move-enter-active {
+  animation: moveIn 0.4s;
+}
+
+.move-leave-active {
+  animation: moveOut 0.4s;
+}
+
+@keyframes enter {
+  from {
+    transform: translateY(1%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+  }
+}
+
+@keyframes leave {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(1%);
+    opacity: 0;
+  }
+}
+// .fade-enter-active{
+//     animation: enter 0.2s ;
+//     -webkit-animation: enter 0.2s ;
+// }
+// .fade-leave-active{
+//     animation: leave 0.2s ;
+//     -webkit-animation: leave 0.2s ;
+// }
+
+.ripple {
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  position: absolute;
+  opacity: 1;
+}
+
+.rippleEffect {
+  -webkit-animation: rippleDrop 0.4s linear;
+  animation: rippleDrop 0.4s linear;
+}
+
+@-webkit-keyframes rippleDrop {
+  100% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes rippleDrop {
+  100% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.loginbtn {
+  width: 120px;
+  height: 50px;
+  /* position: relative; */
+  background: #1685d3;
+  outline: line;
+  /* overflow: hidden; */
+}
+
+// 动态切换
+
+@keyframes move-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+}
+
+@keyframes move-in {
+  from {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+  }
+}
+
+.slide-enter-active {
+  animation: move-in 0.3s;
+}
+.slide-leave-active {
+  animation: move-out 0.3s;
+}
+
+@keyframes move-outtwo {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(2%);
+    opacity: 0;
+    -webkit-transform: translateY(2%);
+    -moz-transform: translateY(2%);
+    -ms-transform: translateY(2%);
+    -o-transform: translateY(2%);
+  }
+}
+
+@keyframes move-intwo {
+  from {
+    transform: translateY(2%);
+    opacity: 0;
+    -webkit-transform: translateY(2%);
+    -moz-transform: translateY(2%);
+    -ms-transform: translateY(2%);
+    -o-transform: translateY(2%);
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.slidetwo-enter-active {
+  animation: move-intwo 0.3s;
+  -webkit-animation: move-intwo 0.3s;
+}
+.slidetwo-leave-active {
+  animation: move-outtwo 0.3s;
+  -webkit-animation: move-outtwo 0.3s;
+}
+
+.zoomInUp {
+  animation: zoomInUp 1.3s;
+}
+
+.fade-enter-active {
+  animation: fadeIn 0.3s;
+  -webkit-animation: fadeIn 0.3s;
+}
+
+.fade-leave-active {
+  animation: fadeOut 0.3s;
+  -webkit-animation: fadeOut 0.3s;
+}

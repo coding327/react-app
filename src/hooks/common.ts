@@ -19,11 +19,11 @@ export const useTimeDownCounter = (
 
 export const useGoToPage = () => {
   const gotoPage = (url?: any) => {
-    history.push(url)
-  }
+    history.push(url);
+  };
 
-  return [gotoPage]
-}
+  return [gotoPage];
+};
 
 export const useGetYearWeek = () => {
   //a为年 b为月 c为日

@@ -6,7 +6,7 @@ import {
   CloseToast,
 } from "../utils/message";
 import { history } from "umi";
-export const baseURL = "http://localhost:3000/"; // 本地接口
+export const baseURL = "http://localhost:3000"; // 本地接口
 
 const request = axios.create({
   baseURL: baseURL,
@@ -37,7 +37,7 @@ request.interceptors.response.use(
   function (response) {
     // 响应成功
     console.log(response.data);
-    // CloseToast()
+    CloseToast()
     // if(response.data.code==200){
     //     ShowSuccess(response.data.msg)
     // }else{

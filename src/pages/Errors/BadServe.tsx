@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "antd-mobile";
+import { history } from "umi";
 
-import './badServe.less'
+import "./badServe.less";
 
 const BadServe = () => {
   let [count, setCount] = useState(5);
 
-  let timer: any = null
+  let timer: any = null;
   const dao = () => {
     timer = setInterval(() => {
       if (count > 0) {
@@ -14,6 +15,7 @@ const BadServe = () => {
       } else {
         clearInterval(timer);
         timer = null;
+        history.push("/app");
       }
     }, 1000);
   };

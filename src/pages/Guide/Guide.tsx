@@ -5,6 +5,7 @@ import Dao from "@/components/Dao";
 import { history } from "umi";
 import { useLocalStorageState } from "ahooks";
 import { useGetYearWeek } from "@/hooks/common";
+import { baseURL } from "@/api/request";
 
 const Guide: FC = () => {
   const [current, setCurrent] = useState<number>(0);
@@ -12,7 +13,8 @@ const Guide: FC = () => {
   const getBannerData = async () => {
     let res: any = await Ajax.getBanner();
     if (res.code == 200) {
-      setBanners(res.banners);
+      // setBanners(res.banners);
+      setBanners(res.result);
     }
   };
 
@@ -22,12 +24,12 @@ const Guide: FC = () => {
 
   useLayoutEffect(() => {
     const nowWeek = getWeek();
-    console.log(nowWeek);
-    console.log(week);
+    // console.log(nowWeek);
+    // console.log(week);
     if (week) {
       if (week == nowWeek) {
         // 还是当前这周，不用看广告了
-        history.push('/app')
+        history.push("/app");
       } else {
         // 又是一周了，看一下广告
         setWeek(nowWeek);
@@ -70,7 +72,7 @@ const Guide: FC = () => {
           autoplay={true}
           loop={true}
           onIndexChange={(index: number) => {
-            console.log(index);
+            // console.log(index);
             setCurrent(index);
           }}
         >
@@ -78,7 +80,8 @@ const Guide: FC = () => {
             <Swiper.Item key={index}>
               <img
                 style={{ width: "100%", height: "100%" }}
-                src={item.imageUrl}
+                // src={item.imageUrl}
+                src={item.imgurl.replace(/public/, baseURL)}
               />
             </Swiper.Item>
           ))}

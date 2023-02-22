@@ -1,7 +1,7 @@
 export const AppRoutes = [
   {
     path: "/app",
-    components: "@/pages/App/App",
+    component: "@/pages/App/App",
     routes: [
       { path: "/app/", redirect: "/app/home" },
       { path: "/app/home", component: "@/pages/App/Home" },

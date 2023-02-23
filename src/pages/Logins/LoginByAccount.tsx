@@ -11,14 +11,17 @@ const LoginByAccount = () => {
   const [form] = Form.useForm();
   const formRef: any = useRef();
   const { pwd } = reg;
+  // 使用本地缓存用户名
   const [appName, setAppName] = useLocalStorageState<string | undefined | any>(
     "appName" // key
   );
+  // 使用本地缓存token
   const [appToken, setAppToken] = useSessionStorageState<
     string | undefined | any
   >(
     "appToken" // key
   );
+  // 
   const [appPhone, setAppPhone] = useLocalStorageState<
     string | undefined | any
   >(
@@ -29,7 +32,7 @@ const LoginByAccount = () => {
 
   const onFinish = async (value: any) => {
     let res: any = await Ajax.login(value);
-    if (res.code == 200) {
+    if (res.code === 200) {
       history.push("/app/mine");
       setAppName(value.username);
       setAppToken(res.token);

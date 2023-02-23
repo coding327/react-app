@@ -96,10 +96,6 @@ const Reg: FC = memo(() => {
     }
   };
 
-  // 失败
-  useEffect(() => {
-    console.log(form.getFieldValue("phone"));
-  }, [form]);
   return (
     <div className="reg">
       <MyHead title="注册账号">

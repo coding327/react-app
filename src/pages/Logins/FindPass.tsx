@@ -20,10 +20,12 @@ const FindPass: FC = () => {
   const [form] = Form.useForm();
   const formRef: any = useRef();
   useEffect(() => {
+    // form和formRef.current拿到的是一样的
     console.log(form);
     console.log(formRef.current);
   }, []);
 
+  // 重置表单
   const resetForm = () => {
     form.resetFields();
   };
@@ -37,12 +39,12 @@ const FindPass: FC = () => {
     });
 
     if (res.code === 200) {
-      // 修改成功
+      // 修改成功，删除验证码
       delete value["captcha"];
       history.push("/login?" + qs.stringify(value));
-      ShowToast("密码修改成功");
+      ShowToast("密码找回成功");
     } else {
-      ShowToast("密码修改失败");
+      ShowToast("密码找回失败");
     }
   };
 
@@ -93,7 +95,7 @@ const FindPass: FC = () => {
                 color="primary"
                 size="large"
               >
-                立即修改
+                立即找回
               </Button>
               <Button
                 style={{ width: "4rem" }}

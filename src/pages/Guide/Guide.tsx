@@ -12,7 +12,7 @@ const Guide: FC = () => {
   const [banners, setBanners] = useState<Array<any>>([]);
   const getBannerData = async () => {
     let res: any = await Ajax.getBanner();
-    if (res.code == 200) {
+    if (res.code === 200) {
       // setBanners(res.banners);
       setBanners(res.result);
     }
@@ -22,12 +22,13 @@ const Guide: FC = () => {
   const [getWeek] = useGetYearWeek();
   const [week, setWeek] = useLocalStorageState("localWeek");
 
+  // 比useEffect提前执行
   useLayoutEffect(() => {
     const nowWeek = getWeek();
     // console.log(nowWeek);
     // console.log(week);
     if (week) {
-      if (week == nowWeek) {
+      if (week === nowWeek) {
         // 还是当前这周，不用看广告了
         history.push("/app");
       } else {
@@ -86,7 +87,7 @@ const Guide: FC = () => {
             </Swiper.Item>
           ))}
         </Swiper>
-        {current == banners.length - 1 && (
+        {current === banners.length - 1 && (
           <Button
             onClick={() => history.push("/app")}
             color="success"

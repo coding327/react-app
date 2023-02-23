@@ -31,11 +31,11 @@ const FindPass: FC = () => {
   };
 
   const onFinish = async (value: any) => {
-    console.log(value);
+    console.log(123, value);
     let res: any = await Ajax.findpwd({
       phone: value.phone,
       captcha: value.captcha,
-      password: value.password
+      password: value.password,
     });
 
     if (res.code === 200) {

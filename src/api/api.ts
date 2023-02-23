@@ -20,4 +20,13 @@ export const Ajax = {
   sendcaptcha: (data: any) => POST("/app/sendcaptcha", data),
 
   findpwd: (data: any) => POST("/app/findpwd", data),
+
+  getuserinfo: (data?: userState) => GET("/app/getuserinfo", data),
+
+  gettoken: (data?: userState) => POST("/app/gettoken", data),
+
+  uplodafile: (data?: any) => POST("/app/uplodafile", data),
+
+  changeuserinfo: (data?: userState) => POST("/app/changeuserinfo", data),
+
 };

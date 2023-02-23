@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Form, Input, Button, Space } from "antd-mobile";
-import { ShowToast } from "@/utils/message";
+import { ShowFail, ShowToast } from "@/utils/message";
 import PassInput from "@/components/PassInput";
 import { reg } from "@/utils/validate";
 import { history, Link, useSearchParams } from "umi";
@@ -36,6 +36,8 @@ const LoginByAccount = () => {
       setAppName(value.username);
       setAppToken(res.token);
       setAppPhone(res.result.phone);
+    } else {
+      ShowFail(res.msg)
     }
   };
   const resetForm = () => {

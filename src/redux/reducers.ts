@@ -1,5 +1,6 @@
 export const defaultState = {
   num: 200,
+  userInfo: null
 };
 
 export const reducers = (state = defaultState, action: any) => {
@@ -11,6 +12,12 @@ export const reducers = (state = defaultState, action: any) => {
       break;
     case "ChangeNum":
       return { ...state, num: state.num + payload };
+      break;
+    case "getuserinfoasync":
+      return { ...state, userInfo: payload };
+      break;
+    case "setuserinfo":
+      return { ...state, userInfo: payload };
       break;
     default:
       return state;

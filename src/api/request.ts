@@ -19,8 +19,8 @@ const request = axios.create({
 request.interceptors.request.use(
   function (config) {
     // 发送到后端
-    const token = sessionStorage.getItem("pro_token");
-    config.headers.token = token;
+    const token = sessionStorage.getItem("appToken");
+    config.headers.token = token?.replace(/"/g, '');
     // 请求发送之前
     ShowLoading();
     return config;
@@ -36,8 +36,8 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   function (response) {
     // 响应成功
-    // console.log(response.data);
-    // CloseToast()
+    console.log(response.data);
+    CloseToast()
     // if(response.data.code==200){
     //     ShowSuccess(response.data.msg)
     // }else{
@@ -46,6 +46,9 @@ request.interceptors.response.use(
     //         router.replace('/login')
     //     }
     // }
+    if (response.data.code === 3001) {
+      ShowFail(response.data.msg)
+    }
     return response;
   },
   function (error) {

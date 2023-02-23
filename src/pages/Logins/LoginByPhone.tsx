@@ -1,27 +1,59 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Form, Input, Button, Space } from "antd-mobile";
 import { ShowToast } from "@/utils/message";
-import { Link, useSearchParams } from "umi";
+import { history, Link, useSearchParams } from "umi";
 import { reg } from "@/utils/validate";
 import CaptchaBtn from "@/components/CaptchaBtn";
 import { useLocalStorageState } from "ahooks";
+import { Ajax } from '@/api/api'
 
 const LoginByPhone: FC = () => {
   const [form] = Form.useForm();
   const formRef: any = useRef();
-  const onFinish = (value: any) => {};
-  const [phone, setPhone] = useState<any>("");
   // 使用umi提供的获取参数的hook，useSearchParams
   const [query] = useSearchParams();
+
+  const [phone, setPhone] = useState<any>("");
   // 使用ahooks中的本地缓存
+  const [appName, setAppName] = useLocalStorageState<string | undefined | any>(
+    "appName"
+  );
+  const [appToken, setAppToken] = useLocalStorageState<
+    string | undefined | any
+  >("appToken");
   const [appPhone, setAppPhone] = useLocalStorageState<
     string | undefined | any
-  >(
-    "appPhone"
-  );
+  >("appPhone");
+
+  const onFinish = async (value: any) => {
+    let res: any = await Ajax.finduser({
+      phone: value.phone
+    })
+    if (res.result) {
+      let res1: any = await Ajax.verifyCaptcha(value)
+      if (res1.data) {
+        // 验证token
+        let res2: any = await Ajax.gettoken({
+          username: res.result.name,
+          phone: res.result.phone,
+          password: res.result.password
+        })
+        if (res2.code === 200) {
+          setAppName(res.result.username)
+          setAppToken(res2.token)
+          setAppPhone(res.result.phone)
+          history.push('/app/mine')
+        }
+      }
+    } else {
+      ShowToast('手机号未注册，请先注册')
+      history.push('/reg')
+    }
+  };
 
   // 设置自动填入手机号
   useEffect(() => {
+    setPhone(query.get('phone') ? query.get('phone') : appPhone)
     // 地址栏有就用地址栏的，没有就用本地的
     form.setFieldValue(
       "phone",

@@ -41,8 +41,6 @@ const LoginByAccount = () => {
   };
 
   useEffect(() => {
-    console.log(query.get("username"));
-
     form.setFieldValue(
       "username",
       query.get("username") ? query.get("username") : appName

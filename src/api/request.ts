@@ -36,8 +36,8 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   function (response) {
     // 响应成功
-    console.log(response.data);
-    CloseToast()
+    // console.log(response.data);
+    // CloseToast()
     // if(response.data.code==200){
     //     ShowSuccess(response.data.msg)
     // }else{

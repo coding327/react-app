@@ -9,7 +9,7 @@ import PassInput from "@/components/PassInput";
 import { Ajax } from "@/api/api";
 import { useCountDown } from "ahooks";
 import { history, Link } from "umi";
-import qs from "qs"; // Node 自带模块
+import qs from "qs";
 
 const FindPass: FC = () => {
   const { phone, pwd, code } = reg;
@@ -70,11 +70,6 @@ const FindPass: FC = () => {
       setTargetDate(Date.now() + 1000 * total);
     }
   };
-
-  // 失败
-  useEffect(() => {
-    console.log(form.getFieldValue("phone"));
-  }, [form]);
 
   return (
     <div>

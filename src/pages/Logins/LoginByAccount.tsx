@@ -21,7 +21,6 @@ const LoginByAccount = () => {
   >(
     "appToken" // key
   );
-  // 
   const [appPhone, setAppPhone] = useLocalStorageState<
     string | undefined | any
   >(
@@ -102,7 +101,7 @@ const LoginByAccount = () => {
 
       <Form.Item>
         <div className="links">
-          <Link to="/reg" className="color1">
+          <Link to="/reg" className="color2">
             注册
           </Link>
           <Link to="/findpass" className="color2">

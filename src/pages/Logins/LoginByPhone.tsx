@@ -11,11 +11,13 @@ const LoginByPhone: FC = () => {
   const formRef: any = useRef();
   const onFinish = (value: any) => {};
   const [phone, setPhone] = useState<any>("");
+  // 使用umi提供的获取参数的hook，useSearchParams
   const [query] = useSearchParams();
+  // 使用ahooks中的本地缓存
   const [appPhone, setAppPhone] = useLocalStorageState<
     string | undefined | any
   >(
-    "appPhone" // key
+    "appPhone"
   );
 
   // 设置自动填入手机号
@@ -78,7 +80,7 @@ const LoginByPhone: FC = () => {
 
       <Form.Item>
         <div className="links">
-          <Link to="/reg" className="color1">
+          <Link to="/reg" className="color2">
             注册
           </Link>
           <Link to="/findpass" className="color2">

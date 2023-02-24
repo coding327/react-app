@@ -1,7 +1,7 @@
 import { Ajax } from "@/api/api";
 import React, {FC, useRef} from "react";
 
-
+// 图片上传组件
 const UploadFile: FC<any> = ({ children, emitPath }) => {
 
   const fileRef: any = useRef()

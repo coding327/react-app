@@ -31,6 +31,7 @@ const Submit = () => {
   let [current, setCurrent] = useState<number>(0);
   let [newList, setNewList] = useState<Array<any>>(tagList);
   let [fileList, setFileList] = useState<any>([]);
+  let [imgList, setImgList] = useState<any>([])
   let [content, changeContent] = useState<any>()
   let [formdata, setFormData] = useState({})
   let steps = [
@@ -77,12 +78,32 @@ const Submit = () => {
     }
   };
 
-  const mockUpload = (value: any): any => {
+  const mockUpload = async (value: any) => {
     console.log(value);
+    let data = new FormData()
+    data.append('file', value)
+
+    let res: any = await Ajax.uplodafile(data)
+    if (res.code === 200) {
+      Toast.clear()
+      imgList.push({
+        url: res.path // 后台图片路径
+      })
+      setImgList([...imgList])
+    }
     return {
-      url: URL.createObjectURL(value),
+      url: URL.createObjectURL(value), // 本地显示
     };
   };
+
+  const DeleteImg = (value: any) => {
+    console.log(value)
+
+    let index = _.findIndex(fileList, (item: any) => item.url === value.url)
+    console.log(index)
+    imgList.splice(index, 1)
+    setImgList([...imgList])
+  }
 
   // 上一步
   const goPrev = () => {
@@ -91,9 +112,9 @@ const Submit = () => {
 
   // 提交数据
   const submitData = async () => {
-    console.log(formdata)
-    console.log(content)
-    console.log(fileList)
+    // console.log(formdata)
+    // console.log(content)
+    // console.log(fileList)
     if (content) {
       // 登录才能提交
       if (appToken) {
@@ -206,7 +227,8 @@ const Submit = () => {
                 upload={mockUpload}
                 multiple
                 maxCount={9}
-                showUpload={fileList < 9}
+                onDelete={DeleteImg}
+                showUpload={fileList.length < 9}
                 onCountExceed={(exceed) => {
                   Toast.show(`最多选择9张图片，你多选择了${exceed}张`);
                 }}

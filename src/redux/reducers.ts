@@ -1,6 +1,10 @@
 export const defaultState = {
   num: 200,
-  userInfo: null
+  userInfo: null, // 用户信息
+  paths: {
+    from: '', // 从哪来
+    to: '', // 到哪去
+  }
 };
 
 export const reducers = (state = defaultState, action: any) => {
@@ -19,6 +23,9 @@ export const reducers = (state = defaultState, action: any) => {
     case "setuserinfo":
       return { ...state, userInfo: payload };
       break;
+    case "changepaths":
+      return {...state, paths: payload}
+      break
     default:
       return state;
       break;

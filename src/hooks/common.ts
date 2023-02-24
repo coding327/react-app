@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useCountDown, useSessionStorageState } from "ahooks";
 import { history } from "umi";
 import { Dialog } from "antd-mobile";
+import moment from "moment";
 
 // 自定义Hooks
 export const useTimeDownCounter = (
@@ -51,37 +52,51 @@ export const useGetYearWeek = () => {
 };
 
 export const useCheckLogin = () => {
-  const [appToken, setAppToken] = useSessionStorageState<string | undefined | any>('appToken')
+  const [appToken, setAppToken] = useSessionStorageState<
+    string | undefined | any
+  >("appToken");
 
   const hasLogin = (next: any) => {
     if (appToken) {
-      next()
+      next();
     } else {
       Dialog.confirm({
-        content: '亲，请先登录',
+        content: "亲，请先登录",
         onConfirm() {
-          history.push('/login')
+          history.push("/login");
         },
-      })
+      });
     }
-  }
+  };
 
-  return [hasLogin]
-}
+  return [hasLogin];
+};
 
 export const useLoginAuthPush = () => {
   const loginAuthPush = () => {
     // 注册，找回密码，修改密码 -> 个人中心
     // 其他 go(-1)
-    let fromPath = localStorage.getItem('fromPath')
-    if (fromPath==='/reg' || fromPath === '/findpass' || fromPath === 'changepass') {
-      history.push('/app/mine')
-      console.log('go mine')
+    let fromPath = localStorage.getItem("fromPath");
+    if (
+      fromPath === "/reg" ||
+      fromPath === "/findpass" ||
+      fromPath === "changepass"
+    ) {
+      history.push("/app/mine");
+      console.log("go mine");
     } else {
-      history.go(-1)
-      console.log('go -1')
+      history.go(-1);
+      console.log("go -1");
     }
-  }
-  return [loginAuthPush]
-}
+  };
+  return [loginAuthPush];
+};
 
+// 时间格式化
+export const useCommon = () => {
+  const setdateFormat = (time?: any, type = "YYYY-MM-DD") => {
+    return moment(time).format(type);
+  };
+
+  return [setdateFormat];
+};

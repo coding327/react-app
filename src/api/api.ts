@@ -33,5 +33,9 @@ export const Ajax = {
 
   addtravels: (data?: any) => POST("/app/addtravels", data),
 
-  getmytravels: (data?: any) => POST("/app/getmytravels", data)
+  getmytravels: (data?: any) => POST("/app/getmytravels", data),
+
+  gettravelbyid: (data?: any) => POST("/app/gettravelbyid", data),
+
+  getalltravels: (data?: any) => POST("/app/getalltravels", data),
 };

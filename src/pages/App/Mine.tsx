@@ -1,20 +1,27 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import MyHead from "@/components/MyHead";
 import { connect } from "react-redux";
 import { getuserinfoasync, setuserinfo } from "@/redux/actions";
 import BG from "@/assets/images/mine.gif";
-import { Avatar, Button } from "antd-mobile";
+import { Avatar, Button, Dialog, List, Mask, ProgressBar } from "antd-mobile";
 import { history } from "umi";
 import UploadFile from "@/components/UploadFile";
 import { Ajax } from "@/api/api";
 import { baseURL } from "@/api/request";
 import { defaultAvatar } from "@/utils/common";
 import "./app.scss";
+import {
+  UnorderedListOutline,
+  PayCircleOutline,
+  SetOutline,
+} from "antd-mobile-icons";
+import { ShowSuccess, ShowToast } from "@/utils/message";
 
 const Mine: FC<any> = ({ userInfo, dispatch }) => {
-  useEffect(() => {
-    dispatch(getuserinfoasync());
-  }, []);
+  let timer: any = null;
+  const [cache, setCache] = useState<number>(Math.round(Math.random() * 100));
+  const [visible, setVisible] = useState<boolean>(false);
+  let [percent, setPercent] = useState<number>(0);
 
   const getAvatarPath = async (path: string) => {
     // 拿到用户头像图片路径，后端用户信息改
@@ -29,6 +36,39 @@ const Mine: FC<any> = ({ userInfo, dispatch }) => {
       );
     }
   };
+
+  const logoutAction = () => {
+    Dialog.confirm({
+      content: "亲，你真的要退出登录吗???",
+      // 点击确认退出登录，清除token和userInfo
+      onConfirm: () => {
+        sessionStorage.removeItem("appToken");
+        dispatch(setuserinfo(null));
+      },
+    });
+  };
+
+  const startGetPercent = () => {
+    timer = setInterval(() => {
+      if (percent < 100) {
+        setPercent(percent++);
+      } else {
+        setVisible(false);
+        ShowSuccess("缓存清除成功");
+        setCache(0);
+        setPercent(0);
+        clearInterval(timer);
+        timer = null;
+      }
+    }, 50);
+  };
+
+  useEffect(() => {
+    dispatch(getuserinfoasync());
+
+    clearInterval(timer);
+    timer = null;
+  }, []);
 
   return (
     <div className="mine">
@@ -68,6 +108,94 @@ const Mine: FC<any> = ({ userInfo, dispatch }) => {
           </div>
         )}
       </div>
+
+      {/* 操作列表 */}
+      <div className="mine-list" style={{ padding: 1 }}>
+        <List header="操作列表">
+          {userInfo && (
+            <div>
+              <List.Item
+                prefix={<UnorderedListOutline />}
+                onClick={() => history.push("/submit")}
+              >
+                我的游记
+              </List.Item>
+              <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+                我的足迹
+              </List.Item>
+              <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+                我的点赞
+              </List.Item>
+              <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+                我的收藏
+              </List.Item>
+              <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+                我的钱包
+              </List.Item>
+              <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+                修改密码
+              </List.Item>
+            </div>
+          )}
+          <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+            公告
+          </List.Item>
+          <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+            设置
+          </List.Item>
+          <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+            联系我们
+          </List.Item>
+          <List.Item
+            prefix={<UnorderedListOutline />}
+            extra={cache + "M"}
+            onClick={() => {
+              if (cache === 0) {
+                ShowToast("缓存已经全部清除");
+              } else {
+                setVisible(true);
+                startGetPercent();
+              }
+            }}
+          >
+            清除缓存
+          </List.Item>
+        </List>
+      </div>
+
+      {/* 推出登录 */}
+      {userInfo && (
+        <div className="logout" style={{ margin: 16 }}>
+          <Button block color="warning" onClick={logoutAction}>
+            退出登录
+          </Button>
+        </div>
+      )}
+
+      <Mask
+        destroyOnClose={true}
+        visible={visible}
+        style={{
+          zIndex: 10000,
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          width: "100vw",
+          padding: 15,
+        }}
+      >
+        <div style={{ width: "100%", color: "#fff" }}>
+          <ProgressBar
+            percent={percent}
+            text
+            style={{
+              "--fill-color": "var(--adm-color-success)",
+              color: "#fff",
+            }}
+            rounded={false}
+          ></ProgressBar>
+        </div>
+      </Mask>
     </div>
   );
 };

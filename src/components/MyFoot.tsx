@@ -40,9 +40,11 @@ export const FootList = [
 
 const MyFoot: FC = () => {
   const location = useLocation();
+  // useParams params
+  // useSearchParams query
 
   return (
-    <div>
+    <footer>
       {FootList.map((item, index) => {
         return (
           <div key={index}>
@@ -60,7 +62,7 @@ const MyFoot: FC = () => {
           </div>
         );
       })}
-    </div>
+    </footer>
   );
 };
 

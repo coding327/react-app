@@ -9,6 +9,7 @@ export const routes = [
   ...LoginRoutes,
   ...AppRoutes,
   { path: "/search", component: "@/pages/Search/Search" },
+  { path: "/submit", component: "@/pages/Submit/Submit" },
   { path: "/503", component: "@/pages/Errors/BadServe" },
   { path: "/404", component: "@/pages/Errors/NotFound" },
   { path: "/*", redirect: "/404" },

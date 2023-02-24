@@ -13,6 +13,7 @@ const AntFoot: FC = () => {
         bottom: 0,
         left: 0,
         borderTop: "1px solid #ddd",
+        background: '#fff'
       }}
     >
       <TabBar

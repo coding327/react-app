@@ -92,6 +92,12 @@ const MyHead: FC<{
     <NavBar
       style={{
         "--border-bottom": "1px solid #ddd",
+        width: '100%',
+        position: 'fixed',
+        zIndex: 100,
+        background: '#fff',
+        left: 0,
+        top: 0
       }}
       right={right}
       left={left}

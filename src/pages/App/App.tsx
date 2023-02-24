@@ -4,7 +4,7 @@ import AntFoot from "@/components/AntFoot";
 
 const App = () => {
   return (
-    <div>
+    <div className="appbox">
       <Outlet></Outlet>
       <AntFoot></AntFoot>
     </div>

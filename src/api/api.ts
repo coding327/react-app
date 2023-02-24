@@ -30,4 +30,8 @@ export const Ajax = {
   uplodafile: (data?: any) => POST("/app/uplodafile", data),
 
   changeuserinfo: (data?: userState) => POST("/app/changeuserinfo", data),
+
+  addtravels: (data?: any) => POST("/app/addtravels", data),
+
+  getmytravels: (data?: any) => POST("/app/getmytravels", data)
 };

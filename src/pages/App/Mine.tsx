@@ -132,7 +132,7 @@ const Mine: FC<any> = ({ userInfo, dispatch }) => {
               <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
                 我的钱包
               </List.Item>
-              <List.Item prefix={<UnorderedListOutline />} onClick={() => {}}>
+              <List.Item prefix={<UnorderedListOutline />} onClick={() => { history.push('/changepass?password='+userInfo.password) }}>
                 修改密码
               </List.Item>
             </div>

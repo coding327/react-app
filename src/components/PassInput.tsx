@@ -10,6 +10,7 @@ const PassInput: FC<any> = ({
   dependencies,
   placeholder,
   onChange,
+  disabled,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -32,6 +33,8 @@ const PassInput: FC<any> = ({
       }
     >
       <Input
+        disabled={disabled}
+        clearable
         type={visible ? "text" : "password"}
         onChange={onChange}
         placeholder={placeholder}

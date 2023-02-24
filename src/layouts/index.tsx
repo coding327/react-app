@@ -18,7 +18,7 @@ import 'lib-flexible'
 
 export default function Layout() {
   return (
-    <div className={styles.all}>
+    <div className={styles.all} style={{paddingTop: 48}}>
       {/* 隔空传递 */}
       <Provider store={store}>
         <Outlet />

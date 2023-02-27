@@ -4,12 +4,7 @@ import { useCheckLogin, useCommon } from "@/hooks/common";
 import React, { FC, useEffect, useState } from "react";
 import { history, Link } from "umi";
 import { Result, Card, Tag, Ellipsis, Image, Space } from "antd-mobile";
-import {
-  SmileOutline,
-  AntOutline,
-  RightOutline,
-  LocationOutline,
-} from "antd-mobile-icons";
+import { SmileOutline, LocationOutline } from "antd-mobile-icons";
 import _ from "lodash";
 import { baseURL } from "@/api/request";
 

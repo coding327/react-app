@@ -38,4 +38,10 @@ export const Ajax = {
   gettravelbyid: (data?: any) => POST("/app/gettravelbyid", data),
 
   getalltravels: (data?: any) => POST("/app/getalltravels", data),
+
+  gettravelbanners: (data?: any) => POST("/app/gettravelbanners", data),
+
+  gethomelist: (data?: any) => POST("/app/gethomelist", data),
+
+  changehot: (data?: any) => POST("/app/changehot", data),
 };

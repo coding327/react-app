@@ -22,7 +22,7 @@ request.interceptors.request.use(
     const token = sessionStorage.getItem("appToken");
     config.headers.token = token?.replace(/"/g, '');
     // 请求发送之前
-    ShowLoading();
+    // ShowLoading();
     return config;
   },
   function (error) {

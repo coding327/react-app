@@ -1,7 +1,9 @@
 import { useCheckLogin, useCommon } from "@/hooks/common";
 import React, { FC, useEffect, useState } from "react";
-import { history } from "umi";
+import { history, Link } from "umi";
 import {
+  Result,
+  Card,
   Tag,
   Ellipsis,
   Image,
@@ -21,7 +23,7 @@ import {
 } from "antd-mobile-icons";
 import _ from "lodash";
 import { baseURL } from "@/api/request";
-const ListItem: FC<any> = ({ item, type, flag, tab }) => {
+const ListItem: FC<any> = ({ item, type }) => {
   const [setdateFormat] = useCommon();
   return (
     <div
@@ -63,25 +65,8 @@ const ListItem: FC<any> = ({ item, type, flag, tab }) => {
             alignItems: "center",
           }}
         >
-          <span
-            style={{
-              lineHeight: 1,
-              color: tab == "2" ? "#f50" : "#999",
-              fontSize: tab == "2" ? "14px" : "12px",
-            }}
-          >
-            {setdateFormat(
-              flag ? item.time : item.date,
-              flag && "YYYY-MM-DD HH:mm:ss"
-            )}
-          </span>
-          <span
-            style={{
-              lineHeight: 1,
-              color: tab == "1" ? "#f50" : "#999",
-              fontSize: tab == "1" ? "14px" : "12px",
-            }}
-          >
+          <span style={{ lineHeight: 1 }}>{setdateFormat(item.date)}</span>
+          <span style={{ lineHeight: 1 }}>
             <FireFill /> 热度: {item.hot}
           </span>
         </div>

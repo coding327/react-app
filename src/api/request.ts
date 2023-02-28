@@ -20,7 +20,7 @@ request.interceptors.request.use(
   function (config) {
     // 发送到后端
     const token = sessionStorage.getItem("appToken");
-    config.headers.token = token?.replace(/"/g, '');
+    config.headers.token = token?.replace(/"/g, "");
     // 请求发送之前
     // ShowLoading();
     return config;
@@ -36,18 +36,9 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   function (response) {
     // 响应成功
-    console.log(response.data);
-    CloseToast()
-    // if(response.data.code==200){
-    //     ShowSuccess(response.data.msg)
-    // }else{
-    //     ShowFail(response.data.msg)
-    //     if(response.data.code==3001){
-    //         router.replace('/login')
-    //     }
-    // }
+    CloseToast();
     if (response.data.code === 3001) {
-      ShowFail(response.data.msg)
+      ShowFail(response.data.msg);
     }
     return response;
   },

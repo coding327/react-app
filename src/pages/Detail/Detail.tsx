@@ -11,37 +11,55 @@ import {
   Image,
   Space,
   Divider,
+  Avatar,
+  Toast,
 } from "antd-mobile";
 import {
   HeartOutline,
   FillinOutline,
+  RightOutline,
   LikeOutline,
   LocationOutline,
   FireFill,
-  UserCircleOutline,
 } from "antd-mobile-icons";
 import _ from "lodash";
 import { baseURL } from "@/api/request";
-import { useCommon } from "@/hooks/common";
-const Detail: FC = () => {
+import { useCheckLogin, useCommon } from "@/hooks/common";
+import { connect } from "react-redux";
+import { defaultAvatar } from "@/utils/common";
+import { ShowToast } from "@/utils/message";
+
+const Detail: FC<any> = ({ dispatch, userInfo }) => {
   const location = useLocation();
   const [query] = useSearchParams();
   const params = useParams();
   const [obj, setObj] = useState<any>(null);
   const [setdateFormat] = useCommon();
+  const [checkLogin] = useCheckLogin();
   const changehot = async (hot: any) => {
-    let res: any = await Ajax.changehot({
+    let res: any = await Ajax.changetravels({
       _id: params.id,
       hot: hot,
     });
   };
-  const getDetailData = async () => {
+
+  const changetravels = async (payload: any) => {
+    let res: any = await Ajax.changetravels({
+      _id: params.id,
+      ...payload,
+    });
+    if (res.code == 200) {
+      getDetailData(true); // 刷新页面的热度
+    }
+  };
+
+  const getDetailData = async (flag?: any) => {
     let res: any = await Ajax.gettravelbyid({
       _id: params.id,
     });
     if (res.code == 200) {
       setObj(res.result);
-      changehot(res.result.hot + 1); // 每次进了加1
+      !flag && changehot(res.result.hot + 1); // 每次进了加1
     }
   };
 
@@ -54,9 +72,105 @@ const Detail: FC = () => {
       wait: 5000,
     }
   );
+
+  const [hasLike, setHasLike] = useState<boolean>(false);
+  // 点赞
+  const todoLike = () => {
+    checkLogin(async () => {
+      if (hasLike) {
+        Toast.show("取消点赞了");
+        // 取消点赞
+        let res: any = await Ajax.dellikeone({
+          tid: params.id,
+          phone: userInfo.phone,
+        });
+        changetravels({
+          hot: obj.hot - 2,
+          likes: (obj.likes ? obj.likes : 0) - 1,
+        });
+      } else {
+        Toast.show("点赞成功了");
+        // 添加点赞
+        let res: any = await Ajax.addlikeone({
+          tid: params.id,
+          phone: userInfo.phone,
+          userInfo,
+          travel: obj,
+        });
+        changetravels({
+          hot: obj.hot + 2,
+          likes: (obj.likes ? obj.likes : 0) + 1,
+        });
+      }
+
+      // 取反
+      setHasLike(!hasLike);
+    });
+  };
+
+  // 判断我是否已经点赞
+  const getMyHasLike = async () => {
+    let res: any = await Ajax.getlikelist({
+      tid: params.id,
+      // phone:userInfo.phone,
+      flag: true, // 带手机号查询
+    });
+    setHasLike(!!res.result.length);
+  };
+
+  // 判断我是否已经收藏
+  const [hasCollect, setHasCollect] = useState<boolean>(false);
+  // 判断我是否已经收藏
+  const getMyHasCollect = async () => {
+    let res: any = await Ajax.getcollectlist({
+      tid: params.id,
+      flag: true, // 带手机号查询
+    });
+    setHasCollect(!!res.result.length);
+  };
+
+  const todoCollect = () => {
+    checkLogin(async () => {
+      if (hasCollect) {
+        // 已经收藏
+        let res: any = await Ajax.delcollectone({
+          tid: params.id,
+          phone: userInfo.phone,
+        });
+        changetravels({
+          hot: obj.hot - 3, // 收藏一次热度+3
+          collects: (obj.collects ? obj.collects : 0) - 1,
+        });
+      } else {
+        // 添加点赞和收藏
+        let res: any = await Ajax.addcollectone({
+          tid: params.id,
+          phone: userInfo.phone,
+          userInfo,
+          travel: obj,
+        });
+        changetravels({
+          hot: obj.hot + 3, // 收藏一次热度+3
+          collects: (obj.collects ? obj.collects : 0) + 1,
+        });
+      }
+
+      setHasCollect(!hasCollect);
+    });
+  };
+
+  useEffect(() => {
+    // 登录就请求，没有登录就不请求
+    checkLogin(() => {
+      // 已经登录有apptoken
+      getMyHasLike();
+      getMyHasCollect();
+    });
+  }, []);
+
   return (
     <div className="detail" style={{ padding: 10 }}>
-      <MyHead title={query.get("title") || ''}></MyHead>
+      <MyHead title={query.get("title")}></MyHead>
       {obj && (
         <div
           style={{
@@ -107,21 +221,6 @@ const Detail: FC = () => {
               >
                 <LocationOutline />
                 <Ellipsis direction="end" rows={1} content={obj.address} />
-              </div>
-
-              <div
-                style={{
-                  marginTop: 5,
-                  fontWeight: "500",
-                  fontSize: 14,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <UserCircleOutline />
-                <span style={{ color: "#123456", marginLeft: 5 }}>
-                  {obj.author.username}
-                </span>
               </div>
             </div>
           </div>
@@ -179,6 +278,35 @@ const Detail: FC = () => {
           </div>
 
           <div
+            style={{
+              marginLeft: 10,
+              color: "#f50",
+              marginTop: 10,
+              fontWeight: "500",
+              fontSize: 14,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {userInfo ? (
+              userInfo.avatar ? (
+                <Avatar
+                  style={{ "--size": "1rem" }}
+                  src={userInfo.avatar.replace(/public/, baseURL)}
+                  className="avatar"
+                />
+              ) : (
+                <Avatar src={defaultAvatar} className="avatar" />
+              )
+            ) : (
+              <Avatar src={defaultAvatar} className="avatar" />
+            )}
+            <span style={{ color: "#123456", marginLeft: 5 }}>
+              {obj.author.username}
+            </span>
+          </div>
+
+          <div
             className="actions"
             style={{
               width: "100%",
@@ -188,15 +316,22 @@ const Detail: FC = () => {
               alignItems: "center",
             }}
           >
-            <span>
-              <LikeOutline /> {obj.likes ? obj.likes : 0}
+            <span
+              onClick={todoLike}
+              style={{ color: hasLike ? "red" : "#333" }}
+            >
+              <LikeOutline />
+              <span>{obj.likes ? obj.likes : 0}</span>
             </span>
             <Divider direction="vertical" />
             <span>
               <FillinOutline /> {obj.pings ? obj.pings : 0}
             </span>
             <Divider direction="vertical" />
-            <span>
+            <span
+              onClick={todoCollect}
+              style={{ color: hasCollect ? "red" : "#333" }}
+            >
               <HeartOutline /> {obj.collects ? obj.collects : 0}
             </span>
           </div>
@@ -206,4 +341,8 @@ const Detail: FC = () => {
   );
 };
 
-export default Detail;
+export default connect((state: any) => {
+  return {
+    ...state,
+  };
+})(Detail);

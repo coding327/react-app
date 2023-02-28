@@ -43,5 +43,17 @@ export const Ajax = {
 
   gethomelist: (data?: any) => POST("/app/gethomelist", data),
 
-  changehot: (data?: any) => POST("/app/changehot", data),
+  changetravels: (data?: any) => POST("/app/changetravels", data),
+
+  getlikelist: (data?: any) => POST("/app/getlikelist", data),
+
+  addlikeone: (data?: any) => POST("/app/addlikeone", data),
+
+  dellikeone: (data?: any) => POST("/app/dellikeone", data),
+
+  getcollectlist: (data?: any) => POST("/app/getcollectlist", data),
+
+  addcollectone: (data?: any) => POST("/app/addcollectone", data),
+
+  delcollectone: (data?: any) => POST("/app/delcollectone", data),
 };

@@ -11,6 +11,7 @@ export const routes = [
   { path: "/search", component: "@/pages/Search/Search" },
   { path: "/submit", component: "@/pages/Submit/Submit" },
   { path: "/detail/:id", component: "@/pages/Detail/Detail" },
+  { path: "/mylikes", component: "@/pages/My/MyLike" },
   { path: "/503", component: "@/pages/Errors/BadServe" },
   { path: "/404", component: "@/pages/Errors/NotFound" },
   { path: "/*", redirect: "/404" },

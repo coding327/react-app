@@ -28,3 +28,19 @@ export const setuserinfo = (payload?: any) => {
     payload,
   };
 };
+
+export const getMyLikes = async (payload?: any, params?: any) => {
+  let res: any = await Ajax.getlikelist(payload, params)
+  return {
+    type: 'getMyLikes',
+    payload: res.result
+  }
+}
+
+export const getMyCollects = async (payload?: any, params?: any) => {
+  let res: any = await Ajax.getcollectlist(payload, params)
+  return {
+    type: 'getMyCollects',
+    payload: res.result
+  }
+}

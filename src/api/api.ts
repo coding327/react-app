@@ -45,13 +45,13 @@ export const Ajax = {
 
   changetravels: (data?: any) => POST("/app/changetravels", data),
 
-  getlikelist: (data?: any) => POST("/app/getlikelist", data),
+  getlikelist: (data?: any, params?: any) => POST("/app/getlikelist", data, params),
 
   addlikeone: (data?: any) => POST("/app/addlikeone", data),
 
   dellikeone: (data?: any) => POST("/app/dellikeone", data),
 
-  getcollectlist: (data?: any) => POST("/app/getcollectlist", data),
+  getcollectlist: (data?: any, params?: any) => POST("/app/getcollectlist", data, params),
 
   addcollectone: (data?: any) => POST("/app/addcollectone", data),
 
